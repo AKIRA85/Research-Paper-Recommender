@@ -11,6 +11,8 @@ while k<len_c:
         citing=c[k][1:-1]
         citing_list=citing.split("@")
         citing_set=set(citing_list)# Making Citing authors set
+        #@akshay
+        cited_set=set()
 
     #Finding Cited Author List
     if '->' in c[k]:
@@ -18,14 +20,17 @@ while k<len_c:
         cited_list=cited.split("->")
         cited_set=set(cited_list)# Making cited Authors set
         
+
 	#Developing Citation Network
         #Removing Self Citation
-        if len(citing_set.intersection(cited_set))== 0:
+        #@akshay
+        if len(citing_set.intersection(cited_set))== 0 and len(cited_set)!=0:
             for i in range(0,len(citing_list)):
                 for j in range(0,len(cited_list)):
                     if g.has_edge(citing_list[i],cited_list[j]):
                         g[citing_list[i]][cited_list[j]]['citation']=g[citing_list[i]][cited_list[j]]['citation']+1
-                        g[citing_list[i]][cited_list[j]]['total']=0
+                        #@akshay
+                        # g[citing_list[i]][cited_list[j]]['total']=0
                         g[citing_list[i]][cited_list[j]]['total']=g[citing_list[i]][cited_list[j]]['total']+g[citing_list[i]][cited_list[j]]['citation']*0.4
                         print('Citation score Updated')
                         #input('Press Any Key')
@@ -41,6 +46,7 @@ while k<len_c:
 	    self_cite=self_cite+1
             print('Self Citation')
             #input('press any key')
+
     k=k+1
 #print(g.edges(data=True))
 print('Citation Network updated')
